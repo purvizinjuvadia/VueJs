@@ -69,51 +69,44 @@
 </template>
 
 <script>
-  import axios from '../../axios-auth';
-  export default {
-    data () {
-      return {
-        email: '',
-        age: null,
-        password: '',
-        confirmPassword: '',
-        country: 'usa',
-        hobbyInputs: [],
-        terms: false
+export default {
+  data () {
+    return {
+      email: '',
+      age: null,
+      password: '',
+      confirmPassword: '',
+      country: 'usa',
+      hobbyInputs: [],
+      terms: false
+    }
+  },
+  methods: {
+    onAddHobby () {
+      const newHobby = {
+        id: Math.random() * Math.random() * 1000,
+        value: ''
       }
+      this.hobbyInputs.push(newHobby)
     },
-    methods: {
-      onAddHobby () {
-        const newHobby = {
-          id: Math.random() * Math.random() * 1000,
-          value: ''
-        }
-        this.hobbyInputs.push(newHobby)
-      },
-      onDeleteHobby (id) {
-        this.hobbyInputs = this.hobbyInputs.filter(hobby => hobby.id !== id)
-      },
-      onSubmit () {
-        const formData = {
-          email: this.email,
-          age: this.age,
-          password: this.password,
-          confirmPassword: this.confirmPassword,
-          country: this.country,
-          hobbies: this.hobbyInputs.map(hobby => hobby.value),
-          terms: this.terms
-        }
-        console.log(formData);
-        axios.post('/signupNewUser?key=AIzaSyCcMMHRyV3-dpyGeHVw5Z1rNjBW_y8PSv0',{
-            email: formData.email,
-            password: formData.password,
-            returnSecureToken: true
-        })
-            .then(res => console.log(res))
-            .catch(error => console.log(error))
+    onDeleteHobby (id) {
+      this.hobbyInputs = this.hobbyInputs.filter(hobby => hobby.id !== id)
+    },
+    onSubmit () {
+      const formData = {
+        email: this.email,
+        age: this.age,
+        password: this.password,
+        confirmPassword: this.confirmPassword,
+        country: this.country,
+        hobbies: this.hobbyInputs.map(hobby => hobby.value),
+        terms: this.terms
       }
+      console.log(formData);
+      this.$store.dispatch('signup', formData)
     }
   }
+}
 </script>
 
 <style scoped>

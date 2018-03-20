@@ -25,30 +25,25 @@
 </template>
 
 <script>
-  import axios from '../../axios-auth'
+export default {
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    onSubmit () {
+      const formData = {
+        email: this.email,
+        password: this.password,
+      }
+      console.log(formData);
+        this.$store.dispatch('login', {email: formData.email, password: formData.password})
 
-  export default {
-    data () {
-      return {
-        email: '',
-        password: ''
-      }
-    },
-    methods: {
-      onSubmit () {
-        const formData = {
-          email: this.email,
-          password: this.password,
-        }
-        console.log(formData);
-          axios.post('/verifyPassword?key=AIzaSyCcMMHRyV3-dpyGeHVw5Z1rNjBW_y8PSv0',{
-              email: formData.email,
-              password: formData.password,
-              returnSecureToken: true
-          })
-      }
     }
   }
+}
 </script>
 
 <style scoped>
